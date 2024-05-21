@@ -1,0 +1,108 @@
+{% extends 'customer/cart_base.html' %}
+{% block content %}
+
+<div class="container mb-5">
+    <div class="row justify-content-center mt-1">
+        <div class="col-md-12 col-sm-12 p-4">
+            <form method="POST">
+                {% csrf_token %}
+                <br class="pt-5">
+                    {% for item in items %}
+                    <div class="row">
+                        <div class="col-md-8 col-sm-12">
+                            <div class="d-flex flex-row">
+                                <div class="form-group form-check">
+                                    <label class="w3-xxlarge"><strong>{{ item.name }}</strong></label>
+                                </div>
+                                <h2 class="font-weight-bold pl-5">{{ item.price }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                {% endfor %}
+
+
+                <div class="foot pt-3 w3-xlarge font-weight-bold pl-5">
+                    <h1 class="pt-3 w3-xxlarge font-weight-bold pl-5 w3-center ">Total</h1>
+                    <h2 id="total" class="pt-3 w3-xxlarge font-weight-bold pl-5 w3-center">$ {{total_price}}</h2>
+                </div>
+                </br>
+                </br>
+                </br>
+                </br>
+
+
+                <h3><span class="w3-tag w3-xxxlarge"> Client Order Form </span></h3>
+
+                <div class="form-group pt-3 w3-xlarge font-weight-bold pl-5">
+                <label for="Full_Name">Full Name</label>
+                <input required class="form-control" type="text" placeholder="Your Name" name="name" />
+                </div>
+
+                <div class="form-group pt-3 w3-xlarge font-weight-bold pl-5">
+                <label for="Email_Address">Email Address</label>
+                <input required class="form-control" type="text" placeholder="example@company.com" name="email" />
+                </div>
+
+                <div class="form-group pt-3 w3-xlarge font-weight-bold pl-5">
+                <label for="Street_Address">Street Address</label>
+                <input required class="form-control" type="text" placeholder="Main square 1" name="street" />
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-group pt-3 w3-xlarge font-weight-bold pl-5">
+                            <label for="City">City</label>
+                            <input required class="form-control" type="text" placeholder="Cracow" name="city" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-group pt-3 w3-xlarge font-weight-bold pl-5">
+                        <label for="State">State</label>
+                        <input required class="form-control" type="text" placeholder="Malopolska" name="state" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-group pt-3 w3-xlarge font-weight-bold pl-5">
+                        <label for="Zip_code">Zip Code</label>
+                        <input required class="form-control" type="text" placeholder="31-730" name="zip" />
+                        </div>
+                    </div>
+
+                    </div>
+
+                <button type="button" class="w3-button w3-round-xlarge w3-black w3-margin-top w3-xlarge" data-toggle="modal" data-target="#submitModal" >
+                  Submit Your Order!
+                </button>
+        <div class="modal fade" id="submitModal" tabindex="-1" role="dialog" aria-labelledby="submitModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                  {% if user.is_authenticated %}
+                <h5 class="modal-title" id="submitModalLabel">Submit Your Order!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Go Back</button>
+                <button type="submit" class="btn btn-dark">Place Order!</button>
+                    {% else %}
+                  <h3>You need to be logged in!</h3>
+                  <button type="submit" class="btn btn-dark"> <a href="{% url 'login' %}" class="w3-bar-item w3-button w3-right w3-padding-16">Log in</a>
+                  </button>
+            {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

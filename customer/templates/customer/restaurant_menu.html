@@ -1,0 +1,48 @@
+{% extends 'customer/menu_base.html' %}
+{% block content %}
+
+<html>
+  <head>
+    <style>
+      input.larger {
+        width: 40px;
+        height: 40px;
+      }
+    </style>
+  </head>
+
+<div class="container mb-5">
+    <div class="row justify-content-center mt-1">
+        <div class="col-md-12 col-sm-12 p-4">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="pt-5">
+                    <h1 class="w3-jumbo w3-tag w3-round" style="margin-bottom:64px">Restaurant Menu: {{ restaurant.name }}</h1>
+
+                    {% for item in menu_items %}
+                    <div class="row">
+                        <p>{% for category in item.category.all %}
+                            <img class="rounded w3-round-xlarge w3-black w3-margin-top w3-xlarge" src="{{ category.image.url }}" width="300" height="300"/>
+                                {% endfor %}</p>
+
+                        <div class="col-md-8 col-sm-12">
+                            <div class="d-flex flex-row">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" name="items[]" class="form-check-input larger" value="{{ item.pk }}">
+                                    <label class="font-weight-bold pl-5 w3-xxlarge"><strong>{{ item.name }}</strong></label>
+                                </div>
+                                <h2 class="font-weight-bold pl-5"><span class="w3-right w3-tag w3-black w3-round">{{ item.price }}</span></h2>
+                            </div>
+                            <p class="w3-xxlarge"><strong>Description: {{ item.description }}</strong></p>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+                <button type="submit" class="btn w3-button w3-round-xlarge w3-black w3-margin-top w3-xlarge" data-toggle="modal" data-target="#submitModal" >
+                  Add to Cart!
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}
